@@ -24,3 +24,9 @@ autoload -Uz compinit && compinit
 
 # p10k設定読み込み
 [[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh
+
+# エイリアス読み込み
+[[ -f ~/.config/zsh/aliases.zsh ]] && source ~/.config/zsh/aliases.zsh
+
+# dotconfig更新チェック
+[[ -f ~/.config/zsh/dotconfig-update-check.zsh ]] && source ~/.config/zsh/dotconfig-update-check.zsh
