@@ -1,5 +1,10 @@
-[tools]
-node = "22.12.0"
-
 [settings]
-idiomatic_version_file_enable_tools = ["node"]
+idiomatic_version_file_enable_tools = ["ruby", "nodejs", "node"]
+
+[tools]
+aws-cli = "latest"
+node = "22"
+"npm:yarn" = "latest"
+ruby = "3.4"
+rust = "1.90.0"
+wrangler = "latest"

@@ -21,3 +21,4 @@ cache
 .config/yarn/global/package.json
 .config/yarn/global/yarn.lock
 .config/yarn/global/node_modules
+.config/gh/hosts.yml
