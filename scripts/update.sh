@@ -74,3 +74,24 @@ read -p "setup.sh を再実行しますか？ [y/N]: " answer
 if [[ "$answer" =~ ^[Yy]$ ]]; then
     "$SCRIPT_DIR/setup.sh"
 fi
+
+# brew更新
+if command -v brew &>/dev/null; then
+    echo ""
+    log_info "brewの更新をチェック中..."
+    brew update
+
+    outdated=$(brew outdated)
+    if [ -n "$outdated" ]; then
+        log_warn "更新可能なパッケージ:"
+        echo "$outdated"
+        echo ""
+        read -p "brew upgrade を実行しますか？ [y/N]: " answer
+        if [[ "$answer" =~ ^[Yy]$ ]]; then
+            brew upgrade
+            log_info "brewの更新が完了しました"
+        fi
+    else
+        log_info "brewパッケージは全て最新です"
+    fi
+fi
