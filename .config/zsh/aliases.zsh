@@ -30,3 +30,5 @@ alias dcd='docker compose down'
 alias setup='"$(dirname "$(readlink ~/.config)")"/scripts/setup.sh'
 alias update='"$(dirname "$(readlink ~/.config)")"/scripts/update.sh'
 
+
+alias glmcode="ANTHROPIC_AUTH_TOKEN=$ZAI_API_KEY ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic API_TIMEOUT_MS=3000000 claude"
