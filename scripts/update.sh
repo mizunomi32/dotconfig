@@ -50,7 +50,6 @@ REMOTE=$(git rev-parse origin/main)
 
 if [ "$LOCAL" = "$REMOTE" ]; then
     log_info "既に最新です"
-    exit 0
 fi
 
 # 更新内容を表示
