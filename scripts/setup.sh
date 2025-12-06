@@ -94,9 +94,40 @@ setup_brewfile() {
     log_info "Brewfile のインストールが完了しました"
 }
 
+setup_hammerspoon() {
+    local SOURCE_HAMMERSPOON_DIR="$DOTCONFIG_DIR/.hammerspoon"
+    local TARGET_HAMMERSPOON_DIR="$HOME/.hammerspoon"
+    local BACKUP_HAMMERSPOON_DIR="$HOME/.hammerspoon.backup.$(date +%Y%m%d%H%M%S)"
+
+    # 既にシンボリックリンクで正しくリンクされている場合
+    if [ -L "$TARGET_HAMMERSPOON_DIR" ]; then
+        current_link=$(readlink "$TARGET_HAMMERSPOON_DIR")
+        if [ "$current_link" = "$SOURCE_HAMMERSPOON_DIR" ]; then
+            log_info "~/.hammerspoon is already linked to $SOURCE_HAMMERSPOON_DIR"
+            return 0
+        else
+            log_error "~/.hammerspoon is a symlink to different location: $current_link"
+            log_error "Remove manually and re-run this script."
+            exit 1
+        fi
+    fi
+
+    # ~/.hammerspoonが存在する場合はバックアップ
+    if [ -d "$TARGET_HAMMERSPOON_DIR" ]; then
+        log_warn "Existing ~/.hammerspoon found. Backing up to $BACKUP_HAMMERSPOON_DIR"
+        mv "$TARGET_HAMMERSPOON_DIR" "$BACKUP_HAMMERSPOON_DIR"
+        log_info "Backup created at $BACKUP_HAMMERSPOON_DIR"
+    fi
+
+    # シンボリックリンクを作成
+    ln -s "$SOURCE_HAMMERSPOON_DIR" "$TARGET_HAMMERSPOON_DIR"
+    log_info "Created symlink: ~/.hammerspoon -> $SOURCE_HAMMERSPOON_DIR"
+}
+
 # メイン処理
 setup_config_symlink
 setup_zshrc
 setup_brewfile
+setup_hammerspoon
 
 log_info "Setup complete!"
