@@ -76,8 +76,27 @@ setup_zshrc() {
     log_info "Added zsh settings to ~/.zshrc"
 }
 
+setup_brewfile() {
+    local BREWFILE="$DOTCONFIG_DIR/Brewfile"
+
+    if ! command -v brew &>/dev/null; then
+        log_warn "Homebrew がインストールされていません。スキップします。"
+        return 0
+    fi
+
+    if [ ! -f "$BREWFILE" ]; then
+        log_warn "Brewfile が見つかりません。スキップします。"
+        return 0
+    fi
+
+    log_info "Brewfile からパッケージをインストール中..."
+    brew bundle --file="$BREWFILE"
+    log_info "Brewfile のインストールが完了しました"
+}
+
 # メイン処理
 setup_config_symlink
 setup_zshrc
+setup_brewfile
 
 log_info "Setup complete!"

@@ -81,6 +81,24 @@ if command -v brew &>/dev/null; then
     log_info "brewの更新をチェック中..."
     brew update
 
+    # Brewfileとの差分をチェック
+    BREWFILE="$DOTCONFIG_DIR/Brewfile"
+    if [ -f "$BREWFILE" ]; then
+        log_info "Brewfileとの差分をチェック中..."
+        if ! brew bundle check --file="$BREWFILE" &>/dev/null; then
+            log_warn "Brewfileに未インストールのパッケージがあります"
+            echo ""
+            read -p "brew bundle install を実行しますか？ [y/N]: " answer
+            if [[ "$answer" =~ ^[Yy]$ ]]; then
+                brew bundle --file="$BREWFILE"
+                log_info "Brewfileのインストールが完了しました"
+            fi
+        else
+            log_info "Brewfileのパッケージは全てインストール済みです"
+        fi
+    fi
+
+    # パッケージの更新チェック
     outdated=$(brew outdated)
     if [ -n "$outdated" ]; then
         log_warn "更新可能なパッケージ:"

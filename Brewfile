@@ -1,0 +1,23 @@
+# Brewfile - Homebrew パッケージ管理
+
+tap "homebrew/cask-fonts"
+
+# CLI tools
+brew "mise"
+brew "bat"
+brew "jq"
+brew "fzf"
+brew "git"
+brew "curl"
+brew "htop"
+brew "tig"
+brew "tmux"
+brew "wget"
+brew "neovim"
+brew "ruby-build"
+
+cask "font-hackgen"
+cask "font-hackgen-nerd"
+cask "orbstack"
+
+# 必要に応じてパッケージを追加
