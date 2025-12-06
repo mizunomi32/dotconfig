@@ -28,5 +28,8 @@ autoload -Uz compinit && compinit
 # エイリアス読み込み
 [[ -f ~/.config/zsh/aliases.zsh ]] && source ~/.config/zsh/aliases.zsh
 
+# WezTerm ユーティリティ
+[[ -f ~/.config/zsh/wezterm-utils.zsh ]] && source ~/.config/zsh/wezterm-utils.zsh
+
 # dotconfig更新チェック
 [[ -f ~/.config/zsh/dotconfig-update-check.zsh ]] && source ~/.config/zsh/dotconfig-update-check.zsh

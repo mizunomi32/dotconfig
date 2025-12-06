@@ -189,15 +189,39 @@ end)
 -- Ctrlキーのダブルタップを検知する設定
 local double_press = require("ctrlDoublePress")
 
--- WezTermを表示または非表示に切り替える関数
+-- WezTermを表示または非表示に切り替える関数（ウィンドウ番号1のみ対象、現在のディスプレイに表示）
 local open_wezterm = function()
     local bundleID = "com.github.wez.wezterm" -- WezTermのBundle ID
     local app = hs.application.get(bundleID)
+    local currentScreen = hs.mouse.getCurrentScreen() -- マウスがあるディスプレイを取得
 
-    if app == nil or app:isHidden() then
+    if app == nil then
+        -- アプリが起動していない場合は起動
         hs.application.launchOrFocusByBundleID(bundleID)
     else
-        app:hide()
+        -- 全てのウィンドウを取得してID順にソート
+        local windows = app:allWindows()
+
+        if #windows == 0 then
+            -- ウィンドウがない場合は起動
+            hs.application.launchOrFocusByBundleID(bundleID)
+        else
+            -- ID順にソートして最初のウィンドウ（ID=1）を取得
+            table.sort(windows, function(a, b) return a:id() < b:id() end)
+            local firstWindow = windows[1]
+
+            if firstWindow:isMinimized() or not firstWindow:isVisible() then
+                -- ウィンドウが最小化されているか非表示の場合は表示
+                firstWindow:unminimize()
+                -- 現在のディスプレイに移動
+                firstWindow:moveToScreen(currentScreen)
+                firstWindow:focus()
+                app:activate()
+            else
+                -- ウィンドウが表示されている場合は非表示
+                firstWindow:minimize()
+            end
+        end
     end
 end
 
