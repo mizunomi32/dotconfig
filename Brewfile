@@ -1,7 +1,5 @@
 # Brewfile - Homebrew パッケージ管理
 
-tap "homebrew/cask-fonts"
-
 # CLI tools
 brew "mise"
 brew "bat"
