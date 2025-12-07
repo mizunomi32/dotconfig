@@ -124,10 +124,43 @@ setup_hammerspoon() {
     log_info "Created symlink: ~/.hammerspoon -> $SOURCE_HAMMERSPOON_DIR"
 }
 
+setup_claude() {
+    local SOURCE_CLAUDE_DIR="$DOTCONFIG_DIR/.claude"
+    local TARGET_CLAUDE_DIR="$HOME/.claude"
+
+    # ~/.claudeが存在しない場合は作成
+    if [ ! -d "$TARGET_CLAUDE_DIR" ]; then
+        mkdir -p "$TARGET_CLAUDE_DIR"
+        log_info "Created ~/.claude directory"
+    fi
+
+    # CLAUDE.mdのシンボリックリンクを作成
+    local SOURCE_CLAUDE_MD="$SOURCE_CLAUDE_DIR/CLAUDE.md"
+    local TARGET_CLAUDE_MD="$TARGET_CLAUDE_DIR/CLAUDE.md"
+
+    if [ -L "$TARGET_CLAUDE_MD" ]; then
+        current_link=$(readlink "$TARGET_CLAUDE_MD")
+        if [ "$current_link" = "$SOURCE_CLAUDE_MD" ]; then
+            log_info "~/.claude/CLAUDE.md is already linked"
+            return 0
+        else
+            log_warn "~/.claude/CLAUDE.md is a symlink to different location: $current_link"
+            rm "$TARGET_CLAUDE_MD"
+        fi
+    elif [ -f "$TARGET_CLAUDE_MD" ]; then
+        log_warn "Existing ~/.claude/CLAUDE.md found. Backing up."
+        mv "$TARGET_CLAUDE_MD" "$TARGET_CLAUDE_MD.backup.$(date +%Y%m%d%H%M%S)"
+    fi
+
+    ln -s "$SOURCE_CLAUDE_MD" "$TARGET_CLAUDE_MD"
+    log_info "Created symlink: ~/.claude/CLAUDE.md -> $SOURCE_CLAUDE_MD"
+}
+
 # メイン処理
 setup_config_symlink
 setup_zshrc
 setup_brewfile
 setup_hammerspoon
+setup_claude
 
 log_info "Setup complete!"

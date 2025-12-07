@@ -1,0 +1,20 @@
+# ローカル設定
+settings.local.json
+
+# 一時ファイル
+*.log
+tmp/
+scratchpad/
+
+# セッションデータ
+todos.json
+
+history.jsonl
+todos/
+plans/
+projects/
+shell-snapshots/
+ide/
+debug/
+session-env/
+statsig/
