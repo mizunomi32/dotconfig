@@ -1,0 +1,4 @@
+# Git グローバル設定
+
+[ghq]
+	root = ~/src

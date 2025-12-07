@@ -33,3 +33,6 @@ autoload -Uz compinit && compinit
 
 # dotconfig更新チェック
 [[ -f ~/.config/zsh/dotconfig-update-check.zsh ]] && source ~/.config/zsh/dotconfig-update-check.zsh
+
+# ghq連携
+[[ -f ~/.config/zsh/ghq-utils.zsh ]] && source ~/.config/zsh/ghq-utils.zsh
